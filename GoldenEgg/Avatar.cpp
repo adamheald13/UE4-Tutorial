@@ -31,5 +31,27 @@ void AAvatar::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
 
+	check(InputComponent);
+
+	InputComponent->BindAxis("ForwardAndBack", this, &AAvatar::MoveForward);
+
+	InputComponent->BindAxis("Strafe", this, &AAvatar::MoveRight);
 }
 
+void AAvatar::MoveForward(float amount)
+{
+	if (Controller && amount)
+	{
+		FVector fwd = GetActorForwardVector();
+		AddMovementInput(fwd, amount);
+	}
+}
+
+void AAvatar::MoveRight(float amount)
+{
+	if (Controller && amount)
+	{
+		FVector right = GetActorRightVector();
+		AddMovementInput(right, amount);
+	}
+}
